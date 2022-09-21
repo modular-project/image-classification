@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message RequestClassImg {
+    bytes img = 1;
+}
+
+message ResponseClassImg {
+    uint32 id = 1;
+    //uint32 accuracy = 2;
+}
+
+service ClassImgService {
+    rpc ClassImg(RequestClassImg) returns (ResponseClassImg);
+}
