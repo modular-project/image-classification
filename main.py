@@ -1,5 +1,6 @@
 from scipy.special import softmax
-import tensorflow as tf
+# import tensorflow as tf
+import tflite_runtime.interpreter as tflite
 import numpy as np
 import classification_pb2 as pb
 import classification_pb2_grpc as pbg
@@ -83,9 +84,9 @@ class_names = ['apple_pie',
 
 class Classifier:
     def __init__(self) -> None:
-        interpreter = tf.lite.Interpreter(model_path='model.tflite')
+        interpreter = tflite.Interpreter(model_path='model.tflite')
         self.model = interpreter.get_signature_runner('serving_default')
-        print(interpreter.get_input_details())
+        # print(interpreter.get_input_details())
 
     def predict(self, img):
         p = self.model(input_6=img)['outputs']
@@ -116,8 +117,8 @@ def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     pbg.add_ClassImgServiceServicer_to_server(
         ClassImgServicer(), server)
-    server.add_insecure_port('[::]:4005')
-    print("Server started at 50051")
+    server.add_insecure_port('[::]:3005')
+    print("Server started at 3005")
     server.start()
     server.wait_for_termination()
 
