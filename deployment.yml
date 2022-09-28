@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ia-app
+  template:
+    metadata:
+      labels:
+        app: ia-app
+    spec:
+      containers:
+      - name: ia-app
+        image: LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+            ephemeral-storage: "64Mi"
+          limits:
+            memory: "256Mi"
+            cpu: "250m"
+            ephemeral-storage: "128Mi"
+        ports:
+        - containerPort: 3005
+          protocol: TCP
+        
+# ---
+# apiVersion: autoscaling/v1
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: ia-app
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: ia-app
+#   minReplicas: 1
+#   maxReplicas: 3
+#   targetCPUUtilizationPercentage: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-svc
+  # annotations:
+  #   cloud.google.com/neg: '{"exposed_ports":{"3005":{}}}'
+spec:
+  ports:
+  - port: 3005
+    name: ia-port-svc
+    protocol: TCP
+    targetPort: 3005
+  selector:
+    app: ia-app
+  type: ClusterIP
