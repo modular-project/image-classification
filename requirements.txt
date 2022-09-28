@@ -1,0 +1,6 @@
+grpcio
+numpy
+Pillow
+protobuf
+scipy
+tflite_runtime
