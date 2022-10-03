@@ -1,6 +1,6 @@
 from scipy.special import softmax
-import tensorflow as tf
-# import tflite_runtime.interpreter as tflite
+# import tensorflow as tf
+import tflite_runtime.interpreter as tflite
 import numpy as np
 import classification_pb2 as pb
 import classification_pb2_grpc as pbg
@@ -84,7 +84,7 @@ class_names = ['apple_pie',
 
 class Classifier:
     def __init__(self) -> None:
-        interpreter = tf.lite.Interpreter(model_path='model.tflite')
+        interpreter = tflite.Interpreter(model_path='model.tflite')
         self.model = interpreter.get_signature_runner('serving_default')
         # print(interpreter.get_input_details())
 
