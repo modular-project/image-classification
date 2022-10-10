@@ -17,11 +17,11 @@ spec:
         image: LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG
         resources:
           requests:
-            memory: "64Mi"
-            cpu: "10m"
+            memory: "128Mi"
+            cpu: "50m"
           limits:
             memory: "128Mi"
-            cpu: "20m"
+            cpu: "100m"
         ports:
         - containerPort: 3005
           protocol: TCP

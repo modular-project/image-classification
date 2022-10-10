@@ -117,8 +117,8 @@ def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     pbg.add_ClassImgServiceServicer_to_server(
         ClassImgServicer(), server)
-    server.add_insecure_port('[::]:4005')
-    print("Server started at 4005")
+    server.add_insecure_port('[::]:3005')
+    print("Server started at 3005")
     server.start()
     server.wait_for_termination()
 
